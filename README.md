@@ -1,2 +1,2 @@
-# teste_admissao_soitic
-CRUD simples de cadastro de livros.
+# Teste de Admissão da Soitic
+Sistema simples de cadastro de livros.

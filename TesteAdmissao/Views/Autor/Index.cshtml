@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Dominio.Autor>
+
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Autores cadastrados
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-autor">
+                        <thead>
+                            <tr>
+                                <th>@Html.DisplayNameFor(model => model.AutorId)</th>
+                                <th>@Html.DisplayNameFor(model => model.NomeAutor)</th>
+                                <th>@Html.DisplayNameFor(model => model.DataInsercao)</th>
+                                <th>@Html.DisplayNameFor(model => model.DataAlteracao)</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var autor in Model)
+                            {
+                                <tr>
+                                    <td>@autor.AutorId</td>
+                                    <td>@autor.NomeAutor</td>
+                                    <td>@autor.DataInsercao</td>
+                                    <td>@autor.DataAlteracao</td>
+                                    <td>
+                                        @Html.ActionLink(" Editar", "edit", "autor", new { autor.AutorId }, new { @class = "btn btn-warning fa fa-edit", id = "btn-edit" })
+                                        @Html.ActionLink(" Detalhes", "details", "autor", new { autor.AutorId }, new { @class = "btn btn-success fa fa-search", id = "btn-details" })
+                                        @Html.ActionLink(" Excluir", null, null, new { @class = "btn btn-danger fa fa-trash-o", data_id = autor.AutorId, id = "btn-delete-autor", href = "#" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<!-- Modal -->
+<div class="modal fade" id="alertAutorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja excluir o autor selecionado?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="excluir-autor-action">Excluir</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

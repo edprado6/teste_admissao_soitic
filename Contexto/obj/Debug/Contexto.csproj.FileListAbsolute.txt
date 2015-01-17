@@ -1,0 +1,14 @@
+c:\users\edprado\documents\visual studio 2013\Projects\TesteAdmissao\Contexto\bin\Debug\Contexto.dll.config
+c:\users\edprado\documents\visual studio 2013\Projects\TesteAdmissao\Contexto\bin\Debug\Contexto.dll
+c:\users\edprado\documents\visual studio 2013\Projects\TesteAdmissao\Contexto\bin\Debug\Contexto.pdb
+c:\users\edprado\documents\visual studio 2013\Projects\TesteAdmissao\Contexto\bin\Debug\Dominio.dll
+c:\users\edprado\documents\visual studio 2013\Projects\TesteAdmissao\Contexto\bin\Debug\EntityFramework.dll
+c:\users\edprado\documents\visual studio 2013\Projects\TesteAdmissao\Contexto\bin\Debug\EntityFramework.SqlServer.dll
+c:\users\edprado\documents\visual studio 2013\Projects\TesteAdmissao\Contexto\bin\Debug\Dominio.pdb
+c:\users\edprado\documents\visual studio 2013\Projects\TesteAdmissao\Contexto\bin\Debug\EntityFramework.xml
+c:\users\edprado\documents\visual studio 2013\Projects\TesteAdmissao\Contexto\bin\Debug\EntityFramework.SqlServer.xml
+c:\users\edprado\documents\visual studio 2013\Projects\TesteAdmissao\Contexto\obj\Debug\Contexto.csprojResolveAssemblyReference.cache
+c:\users\edprado\documents\visual studio 2013\Projects\TesteAdmissao\Contexto\obj\Debug\Contexto.dll
+c:\users\edprado\documents\visual studio 2013\Projects\TesteAdmissao\Contexto\obj\Debug\Contexto.pdb
+c:\users\edprado\documents\visual studio 2013\Projects\TesteAdmissao\Contexto\obj\Debug\Contexto.Migrations.BDInicial.resources
+c:\users\edprado\documents\visual studio 2013\Projects\TesteAdmissao\Contexto\obj\Debug\Contexto.csproj.GenerateResource.Cache

@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Dominio.Livro>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NomeLivro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataInsercao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataAlteracao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Editora)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AnoPublicacao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Edicao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Autor.NomeAutor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoriaId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomeLivro)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataInsercao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataAlteracao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Editora)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AnoPublicacao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Edicao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Autor.NomeAutor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Categoria.NomeCategoria)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.LivroId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.LivroId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LivroId })
+        </td>
+    </tr>
+}
+
+</table>
