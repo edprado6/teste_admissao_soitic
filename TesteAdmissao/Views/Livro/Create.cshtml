@@ -1,70 +1,71 @@
 ﻿@model Dominio.Livro
 
-@{
-    ViewBag.Title = "Create";
-}
-
-<h2>Create</h2>
-
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>Livro</legend>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>@Html.LabelFor(model => model.NomeLivro)</label>
+                @Html.TextBoxFor(model => model.NomeLivro, new { @placeholder = "Insira o nome do Livro", @maxlength = "100", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NomeLivro)
+            </div>
+        </div>
+    </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.NomeLivro)
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>@Html.LabelFor(model => model.Editora)</label>
+                @Html.TextBoxFor(model => model.Editora, new { @placeholder = "Insira o nome da Editora", @maxlength = "100", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Editora)
+            </div>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.NomeLivro)
-            @Html.ValidationMessageFor(model => model.NomeLivro)
-        </div>       
+    </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Editora)
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>@Html.LabelFor(model => model.AnoPublicacao)</label>
+                @Html.TextBoxFor(model => model.AnoPublicacao, new { @maxlength = "4", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AnoPublicacao)
+            </div>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Editora)
-            @Html.ValidationMessageFor(model => model.Editora)
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>@Html.LabelFor(model => model.Edicao)</label>
+                @Html.TextBoxFor(model => model.Edicao, new { @maxlength = "20", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Edicao)
+            </div>
         </div>
+    </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.AnoPublicacao)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.AnoPublicacao)
-            @Html.ValidationMessageFor(model => model.AnoPublicacao)
-        </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Edicao)
+    <div class="row">
+        <div class="col-lg-6">
+            <label><label>@Html.LabelFor(model => model.Autor)</label></label>
+            @Html.DropDownListFor(model => model.AutorId, (SelectList)ViewBag.Autores, "Selecione um autor", new { @class = "form-control" })
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Edicao)
-            @Html.ValidationMessageFor(model => model.Edicao)
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-6">
+            <label>@Html.LabelFor(model => model.Categoria)</label>
+            @Html.DropDownListFor(model => model.CategoriaId, (SelectList)ViewBag.Categorias, "Selecione uma categoria", new { @class = "form-control" })
         </div>
+    </div>
+    
+    <br />
+    <div class="display-label pull-left">
+        <button type="submit" class="btn btn-primary"><i class="fa  fa-save"></i> Salvar</button>
+    </div>
+    <div class="display-label pull-right">
+        @Html.ActionLink(" Listar Livros", "index", "index", new { @class = "btn btn-warning fa fa-arrow-left" })
+    </div>
 
-              
-
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.AutorId, (SelectList)ViewBag.Autores, "Selecione um autor")
-        </div>
-
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.CategoriaId, (SelectList)ViewBag.Categorias, "Selecione uma categoria")
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

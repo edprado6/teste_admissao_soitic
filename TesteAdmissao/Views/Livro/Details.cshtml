@@ -1,0 +1,37 @@
+﻿@model Dominio.Livro
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.LivroId): <b> @Html.DisplayFor(model => model.LivroId)</b>
+</div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.NomeLivro): <b> @Html.DisplayFor(model => model.NomeLivro)</b>
+</div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Autor): <b>@Html.DisplayFor(model => model.Autor.NomeAutor)</b>
+</div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Categoria): <b>@Html.DisplayFor(model => model.Categoria.NomeCategoria)</b>
+</div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Editora): <b>@Html.DisplayFor(model => model.Edicao)</b>
+</div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.Edicao): <b>@Html.DisplayFor(model => model.Categoria.NomeCategoria)</b>
+</div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.DataInsercao): <b>@Html.DisplayFor(model => model.DataInsercao)</b>
+</div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.DataAlteracao): <b>@Html.DisplayFor(model => model.DataAlteracao)</b>
+</div>
+
+<div class="display-label pull-right">
+    <p>@Html.ActionLink(" Listar Categorias", "index", "index", new { @class = "btn btn-warning fa fa-arrow-left", id = "btn-back-categoria" })</p>
+</div>

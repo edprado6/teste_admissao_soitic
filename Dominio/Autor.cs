@@ -16,8 +16,9 @@ namespace Dominio
             this.Livros = new HashSet<Livro>();
         }
 
-        [Key]
+        [Key]        
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        [DisplayName("Cód.")]
         public int AutorId { get; set; }
 
         [DisplayName("Autor")]

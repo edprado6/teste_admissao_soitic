@@ -21,71 +21,87 @@ namespace TesteAdmissao.Controllers
             var autores = db.Autores.ToList();
             return View(autores);
         }
-
-        //
-        // GET: /Autor/Details/5
-
-        public ActionResult Details(int id)
+        
+        /* GET: /Autor/Details/5
+         *
+         */
+        public ActionResult Details(int AutorId)
         {
-            return View();
+            var autor = db.Autores.ToList().FirstOrDefault(c => c.AutorId == AutorId);            
+            if (autor == null)
+            {
+                return HttpNotFound(); // Personalizar página de erro.
+            }            
+            ViewBag.Title = "Detalhes";            
+            return View(autor);
         }
 
         //
         // GET: /Autor/Create
-
         public ActionResult Create()
         {
+            ViewBag.Title = "Cadastrar Autor";  
             return View();
         }
 
         //
         // POST: /Autor/Create
-
         [HttpPost]
         public ActionResult Create(Autor autor)
         {
-            try
-            {
-                autor.DataInsercao = DateTime.Now;
-                autor.DataAlteracao = DateTime.Now;
+            autor.DataInsercao = DateTime.Now;
+            autor.DataAlteracao = DateTime.Now;
+
+            if(ModelState.IsValid)
+            {                
                 db.Autores.Add(autor);
                 db.SaveChanges();
+                _Mensagem("OK", " Autor cadastrado com sucesso.");
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            _Mensagem("FAILED", " Problema ao cadastrar."); 
+            return View();
+            
         }
 
         //
         // GET: /Autor/Edit/5
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int AutorId)
         {
-            return View();
+            var autor = db.Autores.ToList().FirstOrDefault(c => c.AutorId == AutorId);
+            if (autor == null)
+            {
+                return HttpNotFound(); // Personalizar página de erro.
+            }            
+            ViewBag.Title = "Editar Autor";
+            return View(autor);
         }
 
         //
         // POST: /Autor/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
+        public ActionResult Edit(Autor autor)
+        {            
             try
             {
-                // TODO: Add update logic here
-
+                var a = db.Autores.Find(autor.AutorId);
+                a.NomeAutor = autor.NomeAutor;
+                a.DataAlteracao = DateTime.Now;                
+                db.SaveChanges();
+                _Mensagem("OK", " Autor editado com sucesso.");
                 return RedirectToAction("Index");
             }
             catch
             {
+                _Mensagem("FAILED", " Problema ao editar."); 
                 return View();
             }
         }
                 
         /* POST: /Autor/Delete/5
-         * Recebe autor_id e executa o método da aplicação responsável pela
+         * Recebe id e executa o método responsável pela
          * exclusão de elementos.
          */
         [HttpGet]
@@ -101,6 +117,7 @@ namespace TesteAdmissao.Controllers
             }
             catch
             {
+                _Mensagem("FAILED", " Problema ao excluir."); 
                 return View();
             }
         }

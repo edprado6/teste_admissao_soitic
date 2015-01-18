@@ -18,15 +18,22 @@ namespace TesteAdmissao.Controllers
         public ActionResult Index()
         {
             var livros = db.Livros.ToList();
+            ViewBag.Title = "Livros";
             return View(livros);
         }
 
         //
         // GET: /Livro/Details/5
 
-        public ActionResult Details(int id)
+        public ActionResult Details(int LivroId)
         {
-            return View();
+            var livro = db.Livros.FirstOrDefault(x => x.LivroId == LivroId);
+            if (livro == null)
+            {
+                return HttpNotFound(); // Personalizar página de erro.
+            }
+            ViewBag.Title = "Detalhes";
+            return View(livro);
         }
 
         //
@@ -51,10 +58,12 @@ namespace TesteAdmissao.Controllers
                 livro.DataAlteracao = DateTime.Now;
                 db.Livros.Add(livro);
                 db.SaveChanges();
+                _Mensagem("OK", " Livro cadastrado com sucesso.");
                 return RedirectToAction("Index");
             }
             catch
             {
+                _Mensagem("FAILED", " Problema ao cadastrar.");
                 return View();
             }
         }
@@ -62,11 +71,16 @@ namespace TesteAdmissao.Controllers
         //
         // GET: /Livro/Edit/5
 
-        public ActionResult Edit(int id)
-        {
+        public ActionResult Edit(int LivroId)
+        {            
+            var livro = db.Livros.FirstOrDefault(x => x.LivroId == LivroId);
+            if (livro == null)
+            {
+                return HttpNotFound(); // Personalizar página de erro.
+            }
             ViewBag.Autores = new SelectList(db.Autores.ToList(), "AutorId", "NomeAutor");
             ViewBag.Categorias = new SelectList(db.Categorias.ToList(), "CategoriaId", "NomeCategoria");
-            Livro livro = db.Livros.FirstOrDefault(x => x.AutorId == id);            
+            ViewBag.Title = "Editar Livro";
             return View(livro);
         }
 
@@ -86,39 +100,58 @@ namespace TesteAdmissao.Controllers
                 l.AutorId = livro.AutorId;
                 l.CategoriaId = livro.CategoriaId;
                 l.DataAlteracao = DateTime.Now;
-                db.SaveChanges();               
+                db.SaveChanges();
+                _Mensagem("OK", " Livro editado com sucesso.");
                 return RedirectToAction("Index");
             }
             catch
             {
+                _Mensagem("FAILED", " Problema ao editar.");
                 return View();
             }
         }
 
-        //
-        // GET: /Livro/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
+        
         //
         // POST: /Livro/Delete/5
 
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpGet]
+        public ActionResult Delete(int id)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                var livro = db.Livros.Find(id);
+                db.Livros.Remove(livro);
+                db.SaveChanges();
+                _Mensagem("OK", " Livro excluído com sucesso.");
                 return RedirectToAction("Index");
             }
             catch
-            {
+            {                
+                _Mensagem("FAILED", " Problema ao excluir.");
                 return View();
             }
+        }
+
+        /*
+        * Método que retorna um TempData com mensagem, classe para exbição e ícone.
+        * Observação: criar um helper para que possa ser usado em outras Controllers.
+        */
+        public void _Mensagem(string status, string mensagem)
+        {
+            if (status == "OK")
+            {
+                TempData["mensagem"] = mensagem;
+                TempData["classe"] = "alert alert-success";
+                TempData["icone"] = "fa fa-check";
+            }
+            else
+            {
+                TempData["mensagem"] = mensagem;
+                TempData["classe"] = "alert alert-danger";
+                TempData["icone"] = "fa fa-ban";
+            }
+
         }
     }
 }

@@ -960,6 +960,11 @@
     <Content Include="Views\Livro\Create.cshtml" />
     <Content Include="Views\Livro\Index.cshtml" />
     <Content Include="Views\Livro\Edit.cshtml" />
+    <Content Include="Views\Autor\Details.cshtml" />
+    <Content Include="Views\Autor\Edit.cshtml" />
+    <Content Include="Views\Categoria\Details.cshtml" />
+    <Content Include="Views\Categoria\Edit.cshtml" />
+    <Content Include="Views\Livro\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,21 @@
+﻿@model Dominio.Categoria
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.CategoriaId): <b> @Html.DisplayFor(model => model.CategoriaId)</b>
+</div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.NomeCategoria): <b>@Html.DisplayFor(model => model.NomeCategoria)</b>
+</div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.DataInsercao): <b>@Html.DisplayFor(model => model.DataInsercao)</b>
+</div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.DataAlteracao): <b>@Html.DisplayFor(model => model.DataAlteracao)</b>
+</div>
+
+<div class="display-label pull-right">
+    <p>@Html.ActionLink(" Listar Categorias", "index", "index", new { @class = "btn btn-warning fa fa-arrow-left", id = "btn-back-categoria" })</p>
+</div>

@@ -1,0 +1,23 @@
+﻿@model Dominio.Autor
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.AutorId): <b> @Html.DisplayFor(model => model.AutorId)</b>
+</div>
+
+<div class="display-label">
+    @Html.DisplayNameFor( model => model.NomeAutor): <b>@Html.DisplayFor(model => model.NomeAutor)</b>
+</div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.DataInsercao): <b>@Html.DisplayFor(model => model.DataInsercao)</b>
+</div>
+
+<div class="display-label">
+    @Html.DisplayNameFor(model => model.DataAlteracao): <b>@Html.DisplayFor(model => model.DataAlteracao)</b>
+</div>
+
+<div class="display-label pull-right">
+    <p>@Html.ActionLink(" Listar Autores", "index", "index", new { @class = "btn btn-warning fa fa-arrow-left", id = "btn-back-autor" })</p>
+</div>
+
+
