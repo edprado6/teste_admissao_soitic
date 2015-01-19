@@ -102,6 +102,31 @@ namespace TesteAdmissao.Controllers
             }
         }
 
+        /*
+         * Método de visualização de detalhes da categoria. 
+         * Não utiliza view. 
+         * O retorno é Json que será exibido em uma janela modal. 
+         */
+        [HttpGet]
+        public JsonResult Detalhes(int id)
+        {            
+            var categoria = db.Categorias.ToList().FirstOrDefault(c => c.CategoriaId == id);
+            if (categoria == null)
+            {
+                var response = "FAILED";
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                Categoria response = new Categoria();
+                response.CategoriaId = categoria.CategoriaId;
+                response.NomeCategoria = categoria.NomeCategoria;
+                response.DataInsercao = categoria.DataInsercao;
+                response.DataAlteracao = categoria.DataAlteracao;
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         //
         // POST: /Categoria/Delete/5
         [HttpGet]

@@ -29,9 +29,9 @@
                                     <td>@categoria.DataInsercao</td>
                                     <td>@categoria.DataAlteracao</td>
                                     <td>
-                                        @Html.ActionLink(" Editar", "edit", "categoria", new { categoria.CategoriaId }, new { @class = "btn btn-warning fa fa-edit", id = "btn-edit" })
-                                        @Html.ActionLink(" Detalhes", "details", "categoria", new { categoria.CategoriaId }, new { @class = "btn btn-success fa fa-search", id = "btn-details" })
-                                        @Html.ActionLink(" Excluir", null, null, new { @class = "btn btn-danger fa fa-trash-o", data_id = categoria.CategoriaId, id = "btn-delete-categoria", href = "#" })
+                                        @Html.ActionLink(" Editar", "edit", "categoria", new { categoria.CategoriaId }, new { @class = "btn btn-warning fa fa-edit", id = "btn-edit" })                                        
+                                        @Html.ActionLink(" Detalhes", null, null, new { @class = "btn btn-success fa fa-search btn-detalhes-categoria", data_id = categoria.CategoriaId, href = "#" })
+                                        @Html.ActionLink(" Excluir", null, null, new { @class = "btn btn-danger fa fa-trash-o btn-delete-categoria", data_id = categoria.CategoriaId, href = "#" })
                                     </td>
                                 </tr>
                             }
@@ -67,3 +67,7 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+@{
+    Html.RenderPartial("~/Views/Shared/_ModalDetalhes.cshtml");
+}

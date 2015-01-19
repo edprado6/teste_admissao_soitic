@@ -30,8 +30,8 @@
                                     <td>@autor.DataAlteracao</td>
                                     <td>
                                         @Html.ActionLink(" Editar", "edit", "autor", new { autor.AutorId }, new { @class = "btn btn-warning fa fa-edit", id = "btn-edit" })
-                                        @Html.ActionLink(" Detalhes", "details", "autor", new { autor.AutorId }, new { @class = "btn btn-success fa fa-search", id = "btn-details" })
-                                        @Html.ActionLink(" Excluir", null, null, new { @class = "btn btn-danger fa fa-trash-o", data_id = autor.AutorId, id = "btn-delete-autor", href = "#" })
+                                        @Html.ActionLink(" Detalhes", null, null, new { @class = "btn btn-success fa fa-search btn-detalhes-autor", data_id = autor.AutorId, id = "btn-detalhes-autor", href = "#" })
+                                        @Html.ActionLink(" Excluir", null, null, new { @class = "btn btn-danger fa fa-trash-o btn-delete-autor", data_id = autor.AutorId, id = "btn-delete-autor", href = "#" })
                                     </td>
                                 </tr>
                             }
@@ -46,24 +46,7 @@
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-<!-- Modal -->
-<div class="modal fade" id="alertAutorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Alerta</h4>
-            </div>
-            <div class="modal-body">
-                Tem certeza que deseja excluir o autor selecionado?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="excluir-autor-action">Excluir</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+
+@{
+    Html.RenderPartial("~/Views/Shared/_ModalDetalhes.cshtml");
+}

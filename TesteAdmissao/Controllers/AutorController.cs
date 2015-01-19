@@ -10,6 +10,9 @@ namespace TesteAdmissao.Controllers
 {
     public class AutorController : Controller
     {
+        /*
+         * A classe que representa o DB é instanciada.
+         */
         private DBLivro db = new DBLivro();
                
         /* GET: /Autor/
@@ -23,29 +26,32 @@ namespace TesteAdmissao.Controllers
         }
         
         /* GET: /Autor/Details/5
-         *
+         * Método de visualização de detalhes usando view.
+         * Obs: Esse método foi substituído pelo método "Detalhes".
          */
-        public ActionResult Details(int AutorId)
-        {
-            var autor = db.Autores.ToList().FirstOrDefault(c => c.AutorId == AutorId);            
-            if (autor == null)
-            {
-                return HttpNotFound(); // Personalizar página de erro.
-            }            
-            ViewBag.Title = "Detalhes";            
-            return View(autor);
-        }
+        //public ActionResult Details(int AutorId)
+        //{
+        //    var autor = db.Autores.ToList().FirstOrDefault(c => c.AutorId == AutorId);            
+        //    if (autor == null)
+        //    {
+        //        return HttpNotFound(); // Personalizar página de erro.
+        //    }            
+        //    ViewBag.Title = "Detalhes";            
+        //    return View(autor);
+        //}
 
-        //
-        // GET: /Autor/Create
+        /* GET: /Autor/Create
+         * Abre o formulário para cadastro de autores.
+         */
         public ActionResult Create()
         {
             ViewBag.Title = "Cadastrar Autor";  
             return View();
         }
-
-        //
-        // POST: /Autor/Create
+                
+        /* POST: /Autor/Create
+         * recebe o POST do formulário de cadastro de autores.
+         */
         [HttpPost]
         public ActionResult Create(Autor autor)
         {
@@ -60,13 +66,13 @@ namespace TesteAdmissao.Controllers
                 return RedirectToAction("Index");
             }
             _Mensagem("FAILED", " Problema ao cadastrar."); 
-            return View();
-            
+            return View();            
         }
-
-        //
-        // GET: /Autor/Edit/5
-
+       
+        /* GET: /Autor/Edit/5
+         * Recebe um id e busca um autor no bd. Se um autor for 
+         * encontrado, abre o formulário para edição.
+         */
         public ActionResult Edit(int AutorId)
         {
             var autor = db.Autores.ToList().FirstOrDefault(c => c.AutorId == AutorId);
@@ -78,9 +84,10 @@ namespace TesteAdmissao.Controllers
             return View(autor);
         }
 
-        //
-        // POST: /Autor/Edit/5
-
+        
+        /* POST: /Autor/Edit/5
+         * Recebe o post do formulário de edição de autores.
+         */
         [HttpPost]
         public ActionResult Edit(Autor autor)
         {            
@@ -99,7 +106,33 @@ namespace TesteAdmissao.Controllers
                 return View();
             }
         }
-                
+
+        /*
+         * Método de visualização de detalhes do autor. 
+         * Não utiliza view. 
+         * O retorno é Json que será exibido em uma janela modal. 
+         */
+        [HttpGet]
+        public JsonResult Detalhes(int id)
+        {     
+            var autor = db.Autores.ToList().FirstOrDefault(c => c.AutorId == id);
+
+            if (autor == null)
+            {
+                var response = "FAILED";                
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                Autor response = new Autor();
+                response.AutorId = autor.AutorId;
+                response.NomeAutor = autor.NomeAutor;
+                response.DataInsercao = autor.DataInsercao;
+                response.DataAlteracao = autor.DataAlteracao;
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }            
+        }
+                        
         /* POST: /Autor/Delete/5
          * Recebe id e executa o método responsável pela
          * exclusão de elementos.

@@ -34,8 +34,8 @@
                                     
                                     <td>
                                         @Html.ActionLink(" Editar", "edit", "livro", new { livro.LivroId }, new { @class = "btn btn-warning fa fa-edit", id = "btn-edit" })
-                                        @Html.ActionLink(" Detalhes", "details", "livro", new { livro.LivroId }, new { @class = "btn btn-success fa fa-search", id = "btn-details" })
-                                        @Html.ActionLink(" Excluir", null, null, new { @class = "btn btn-danger fa fa-trash-o btn-delete-livro", data_id = livro.LivroId, id = "btn-delete-livro", href = "#" })
+                                        @Html.ActionLink(" Detalhes", null, null, new { @class = "btn btn-success fa fa-search btn-detalhes-livro", data_id = livro.LivroId, href = "#" })
+                                        @Html.ActionLink(" Excluir", null, null, new { @class = "btn btn-danger fa fa-trash-o btn-delete-livro", data_id = livro.LivroId, href = "#" })
                                     </td>
                                 </tr>
                             }
@@ -70,4 +70,7 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
+
+@{
+    Html.RenderPartial("~/Views/Shared/_ModalDetalhes.cshtml");
+}

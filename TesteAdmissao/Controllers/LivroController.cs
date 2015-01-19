@@ -111,6 +111,40 @@ namespace TesteAdmissao.Controllers
             }
         }
 
+        /*
+         * Método de visualização de detalhes do livro. 
+         * Não utiliza view. 
+         * O retorno é Json que será exibido em uma janela modal. 
+         */
+        [HttpGet]
+        public JsonResult Detalhes(int id)
+        {
+            var livro = db.Livros.FirstOrDefault(x => x.LivroId == id);
+            
+            if (livro == null)
+            {
+                var response = "FAILED";
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                Livro response = new Livro();
+                response.LivroId = livro.LivroId;
+                response.NomeLivro = livro.NomeLivro;
+                response.AnoPublicacao = livro.AnoPublicacao;
+                response.DataInsercao = livro.DataInsercao;
+                response.DataAlteracao = livro.DataAlteracao;
+                response.Edicao = livro.Edicao;
+                response.Editora = livro.Editora;
+                //response.Autor.NomeAutor = livro.Autor.NomeAutor;
+                response.Categoria.NomeCategoria = livro.Categoria.NomeCategoria;
+
+                             
+                        
+                return Json(response, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         
         //
         // POST: /Livro/Delete/5
