@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
+    /*
+     * Classe que representa a tabela Livro no Banco de Dados.
+     */
     public class Livro
     {
         [Key]
@@ -39,6 +42,10 @@ namespace Dominio
         [MaxLength(20)]
         public string Edicao { get; set; }
 
+        /*
+         * Abaixo os dois relacionamentos que a tabela livro possui.
+         * AutorId e CategoriaId são chaves estrangeiras.
+         */
         // Cada livro possui um autor. 
         // Cada autor pode ter vários livros.
         public int AutorId { get; set; }

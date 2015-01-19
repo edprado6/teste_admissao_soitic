@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
+    /*
+     * Classe que representa a tabela categoria no Banco de Dados.
+     */
     public class Categoria
     {
         [Key]

@@ -10,11 +10,14 @@ namespace TesteAdmissao.Controllers
 {
     public class LivroController : Controller
     {
+        /*
+        * A classe que representa o DB é instanciada.
+        */
         private DBLivro db = new DBLivro();
-        
-        //
-        // GET: /Livro/
 
+        /* GET: /Livro/
+         * Exibe lista com todos autores cadastrados.
+         */
         public ActionResult Index()
         {
             var livros = db.Livros.ToList();
@@ -22,33 +25,21 @@ namespace TesteAdmissao.Controllers
             return View(livros);
         }
 
-        //
-        // GET: /Livro/Details/5
-
-        public ActionResult Details(int LivroId)
-        {
-            var livro = db.Livros.FirstOrDefault(x => x.LivroId == LivroId);
-            if (livro == null)
-            {
-                return HttpNotFound(); // Personalizar página de erro.
-            }
-            ViewBag.Title = "Detalhes";
-            return View(livro);
-        }
-
-        //
-        // GET: /Livro/Create
-
+        /* GET: /Livro/Create
+          * Abre o formulário para cadastro de livros.
+          */
         public ActionResult Create()
         {
             ViewBag.Autores = new SelectList(db.Autores.ToList(), "AutorId", "NomeAutor");
             ViewBag.Categorias = new SelectList(db.Categorias.ToList(), "CategoriaId", "NomeCategoria");
+            ViewBag.Title = "Cadastrar Livros";
             return View();
         }
 
-        //
-        // POST: /Livro/Create
 
+        /* POST: /Livro/Create
+         * recebe o POST do formulário de cadastro de livros.
+         */
         [HttpPost]
         public ActionResult Create(Livro livro)
         {
@@ -58,21 +49,22 @@ namespace TesteAdmissao.Controllers
                 livro.DataAlteracao = DateTime.Now;
                 db.Livros.Add(livro);
                 db.SaveChanges();
-                _Mensagem("OK", " Livro cadastrado com sucesso.");
+                Helpers.HelpersGeral.MensagensDeStatus(this, "OK", " Livro cadastrado com sucesso.");
                 return RedirectToAction("Index");
             }
             catch
             {
-                _Mensagem("FAILED", " Problema ao cadastrar.");
+                Helpers.HelpersGeral.MensagensDeStatus(this, "FAILED", " Problema ao cadastrar.");
                 return View();
             }
         }
 
-        //
-        // GET: /Livro/Edit/5
-
+        /*  GET: /Livro/Edit/5
+         * Recebe um id e busca um livro no bd. Se um livro for 
+         * encontrado, abre o formulário para edição.
+         */
         public ActionResult Edit(int LivroId)
-        {            
+        {
             var livro = db.Livros.FirstOrDefault(x => x.LivroId == LivroId);
             if (livro == null)
             {
@@ -84,9 +76,9 @@ namespace TesteAdmissao.Controllers
             return View(livro);
         }
 
-        //
-        // POST: /Livro/Edit/5
-
+        /* POST: /Livro/Edit/5
+         * Recebe o post do formulário de edição de livros.
+         */
         [HttpPost]
         public ActionResult Edit(Livro livro)
         {
@@ -101,12 +93,12 @@ namespace TesteAdmissao.Controllers
                 l.CategoriaId = livro.CategoriaId;
                 l.DataAlteracao = DateTime.Now;
                 db.SaveChanges();
-                _Mensagem("OK", " Livro editado com sucesso.");
+                Helpers.HelpersGeral.MensagensDeStatus(this, "OK", " Livro editado com sucesso.");
                 return RedirectToAction("Index");
             }
             catch
             {
-                _Mensagem("FAILED", " Problema ao editar.");
+                Helpers.HelpersGeral.MensagensDeStatus(this, "FAILED", " Problema ao editar.");
                 return View();
             }
         }
@@ -119,36 +111,42 @@ namespace TesteAdmissao.Controllers
         [HttpGet]
         public JsonResult Detalhes(int id)
         {
-            var livro = db.Livros.FirstOrDefault(x => x.LivroId == id);
-            
+            Livro livro = new Livro();
+            livro = db.Livros.Find(id);
+
             if (livro == null)
             {
-                var response = "FAILED";
+                var response = new
+                {
+                    Status = "FAILED",
+                    Mensagem = "Não foi encontrado nenhum livro com o código informado."
+                };
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                Livro response = new Livro();
-                response.LivroId = livro.LivroId;
-                response.NomeLivro = livro.NomeLivro;
-                response.AnoPublicacao = livro.AnoPublicacao;
-                response.DataInsercao = livro.DataInsercao;
-                response.DataAlteracao = livro.DataAlteracao;
-                response.Edicao = livro.Edicao;
-                response.Editora = livro.Editora;
-                //response.Autor.NomeAutor = livro.Autor.NomeAutor;
-                response.Categoria.NomeCategoria = livro.Categoria.NomeCategoria;
+                var response = new
+                    {
+                        LivroId = livro.LivroId,
+                        NomeLivro = livro.NomeLivro,
+                        AnoPublicacao = livro.AnoPublicacao,
+                        DataInsercao = livro.DataInsercao,
+                        DataAlteracao = livro.DataAlteracao,
+                        Edicao = livro.Edicao,
+                        Editora = livro.Editora,
+                        NomeAutor = livro.Autor.NomeAutor,
+                        NomeCategoria = livro.Categoria.NomeCategoria
+                    };
 
-                             
-                        
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
         }
 
-        
-        //
-        // POST: /Livro/Delete/5
 
+        /* GET: /Autor/Delete/5
+         * Recebe id e executa o método responsável pela
+         * exclusão de elementos.
+         */
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -157,35 +155,14 @@ namespace TesteAdmissao.Controllers
                 var livro = db.Livros.Find(id);
                 db.Livros.Remove(livro);
                 db.SaveChanges();
-                _Mensagem("OK", " Livro excluído com sucesso.");
+                Helpers.HelpersGeral.MensagensDeStatus(this, "OK", " Livro excluído com sucesso.");
                 return RedirectToAction("Index");
             }
             catch
-            {                
-                _Mensagem("FAILED", " Problema ao excluir.");
+            {
+                Helpers.HelpersGeral.MensagensDeStatus(this, "FAILED", " Problema ao excluir.");
                 return View();
             }
-        }
-
-        /*
-        * Método que retorna um TempData com mensagem, classe para exbição e ícone.
-        * Observação: criar um helper para que possa ser usado em outras Controllers.
-        */
-        public void _Mensagem(string status, string mensagem)
-        {
-            if (status == "OK")
-            {
-                TempData["mensagem"] = mensagem;
-                TempData["classe"] = "alert alert-success";
-                TempData["icone"] = "fa fa-check";
-            }
-            else
-            {
-                TempData["mensagem"] = mensagem;
-                TempData["classe"] = "alert alert-danger";
-                TempData["icone"] = "fa fa-ban";
-            }
-
         }
     }
 }

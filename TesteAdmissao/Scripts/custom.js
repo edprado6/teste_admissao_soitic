@@ -11,7 +11,7 @@ $(document).on("click", ".btn-delete-categoria", function (event) {
 
 $(document).on("click", ".btn-delete-autor", function (event) {
     event.preventDefault();
-    var autor_id = $(this).data('id');
+    var autor_id = $(this).data('id'); 
     $('#excluir-autor-action').data('autor_id', autor_id);
     $('#alertAutorModal').modal('show');
 });
@@ -62,8 +62,8 @@ $(document).on("click", ".btn-detalhes-livro", function (event) {
 function LoadAutorById(autor_id) {
     $('#modal-body').empty();
     $.getJSON("/autor/detalhes?id=" + autor_id, null, function (data) {
-        if (data == "FAILED") {
-            $('#modal-body').append("<div><label>Não foi encontrado nenhum autor com o código informado.</b></div>" )
+        if (data.Status == "FAILED") {
+            $('#modal-body').append("<div><label>" + data.Mensagem + "</b></div>" )
         }
         else {
             var data_insercao = fomateDate(data.DataInsercao);
@@ -86,8 +86,8 @@ function LoadAutorById(autor_id) {
 function LoadCategoriaById(categoria_id) {
     $('#modal-body').empty();
     $.getJSON("/categoria/detalhes?id=" + categoria_id, null, function (data) {
-        if (data == "FAILED") {
-            $('#modal-body').append("<div><label>Não foi encontrada nenhuma categoria com o código informado.</b></div>")
+        if (data.Status == "FAILED") {
+            $('#modal-body').append("<div><label>" + data.Mensagem + "</b></div>")
         }
         else {
             var data_insercao = fomateDate(data.DataInsercao);
@@ -109,16 +109,16 @@ function LoadCategoriaById(categoria_id) {
 function LoadLivroById(livro_id) {
     $('#modal-body').empty();
     $.getJSON("/livro/detalhes?id=" + livro_id, null, function (data) {
-        if (data == "FAILED") {
-            $('#modal-body').append("<div><label>Não foi encontrado nenhum livro com o código informado.</b></div>")
+        if (data.Status == "FAILED") {
+            $('#modal-body').append("<div><label>" + data.Mensagem + "</b></div>")
         }
         else {
             var data_insercao = fomateDate(data.DataInsercao);
             var data_alteracao = fomateDate(data.DataAlteracao);
             $('#modal-body').append("<div><label>Cód.: </label><b> " + data.LivroId + "  </b></div>" +
             "<div><label>Livro: </label><b> " + data.NomeLivro + "  </b></div>" +
-            "<div><label>Autor: </label><b> " + + "  </b></div>" +
-            "<div><label>categoria: </label><b> " +  + "  </b></div>" +
+            "<div><label>Autor: </label><b> " + data.NomeAutor + "  </b></div>" +
+            "<div><label>Categoria: </label><b> " + data.NomeCategoria + "  </b></div>" +
             "<div><label>Ano de publicação: </label><b> " + data.AnoPublicacao + "  </b></div>" +
             "<div><label>Editora: </label><b> " + data.Editora + "  </b></div>" +
             "<div><label>Edição: </label><b> " + data.Edicao + "  </b></div>" +
@@ -142,6 +142,12 @@ function fomateDate(dataAFormatar) {
 
 $(document).ready(function () {
 
+
+    /*
+     * Campos com máscaras
+     */
+    $('#AnoPublicacao').mask('9999');
+
     /* 
      * As chamadas abaixo direcionam para os métodos das Controllers responsáveis
      * pela exclusão de itens.
@@ -152,7 +158,7 @@ $(document).ready(function () {
     });
 
     $('#excluir-autor-action').click(function (event) {
-        var autor_id = $(this).data('autor_id');
+        var autor_id = $(this).data('autor_id'); 
         document.location = '../autor/delete?id=' + autor_id;        
     });
 

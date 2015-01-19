@@ -10,10 +10,14 @@ namespace TesteAdmissao.Controllers
 {
     public class CategoriaController : Controller
     {
+        /*
+        * A classe que representa o DB é instanciada.
+        */
         private DBLivro db = new DBLivro();
 
-        //
-        // GET: /Categoria/
+        /* GET: /Categoria/
+         * Exibe lista com todos autores cadastrados.
+         */
         public ActionResult Index()
         {
             var categorias = db.Categorias.ToList();
@@ -21,54 +25,41 @@ namespace TesteAdmissao.Controllers
             return View(categorias);
         }
 
-        //
-        // GET: /Categoria/Details/5
-        public ActionResult Details(int CategoriaId)
-        {
-            var categoria = db.Categorias.ToList().FirstOrDefault(c => c.CategoriaId == CategoriaId);
-            if (categoria == null)
-            {
-                return HttpNotFound(); // Personalizar página de erro.
-            }
-            ViewBag.Title = "Detalhes";
-            return View(categoria);
-        }
-
-        //
-        // GET: /Categoria/Create
-
+        /* GET: /Categoria/Create
+         * Abre o formulário para cadastro de categorias.
+         */
         public ActionResult Create()
         {
             ViewBag.Title = "Cadastrar Categoria";
             return View();
         }
 
-        //
-        // POST: /Categoria/Create
-
+        /* POST: /Categoria/Create
+         * Recebe o POST do formulário de cadastro de livros.
+         */
         [HttpPost]
         public ActionResult Create(Categoria categoria)
         {
             try
             {
-                // TODO: Add insert logic here
                 categoria.DataInsercao = DateTime.Now;
                 categoria.DataAlteracao = DateTime.Now;
                 db.Categorias.Add(categoria);
                 db.SaveChanges();
-                _Mensagem("OK", " Categoria editada com sucesso.");
+                Helpers.HelpersGeral.MensagensDeStatus(this, "OK", " Categoria editada com sucesso.");
                 return RedirectToAction("Index");
             }
             catch
             {
-                _Mensagem("FAILED", " Problema ao cadastrar."); 
+                Helpers.HelpersGeral.MensagensDeStatus(this, "FAILED", " Problema ao cadastrar.");
                 return View();
             }
         }
-
-        //
-        // GET: /Categoria/Edit/5
-
+                
+        /* GET: /Categoria/Edit/5
+         * Recebe um id e busca uma categoria no bd. Se uma categoria for 
+         * encontrada, abre o formulário para edição.
+         */
         public ActionResult Edit(int CategoriaId)
         {
             var categoria = db.Categorias.ToList().FirstOrDefault(c => c.CategoriaId == CategoriaId);
@@ -79,10 +70,10 @@ namespace TesteAdmissao.Controllers
             ViewBag.Title = "Editar Categoria";
             return View(categoria);
         }
-
-        //
-        // POST: /Categoria/Edit/5
-
+               
+        /* POST: /Categoria/Edit/5
+         * Recebe o post do formulário de edição de livros.
+         */
         [HttpPost]
         public ActionResult Edit(Categoria categoria)
         {
@@ -92,12 +83,12 @@ namespace TesteAdmissao.Controllers
                 c.NomeCategoria = categoria.NomeCategoria;
                 c.DataAlteracao = DateTime.Now;
                 db.SaveChanges();
-                _Mensagem("OK", " Categoria editada com sucesso.");
+                Helpers.HelpersGeral.MensagensDeStatus(this, "OK", " Categoria editada com sucesso.");
                 return RedirectToAction("Index");
             }
             catch
             {
-                _Mensagem("FAILED", " Problema ao editar."); 
+                Helpers.HelpersGeral.MensagensDeStatus(this, "FAILED", " Problema ao editar.");
                 return View();
             }
         }
@@ -109,26 +100,35 @@ namespace TesteAdmissao.Controllers
          */
         [HttpGet]
         public JsonResult Detalhes(int id)
-        {            
+        {
             var categoria = db.Categorias.ToList().FirstOrDefault(c => c.CategoriaId == id);
             if (categoria == null)
             {
-                var response = "FAILED";
+                var response = new
+                {
+                    Status = "FAILED",
+                    Mensagem = "Não foi encontrado nenhuma categoria com o código informado."
+                };
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
             else
             {
-                Categoria response = new Categoria();
-                response.CategoriaId = categoria.CategoriaId;
-                response.NomeCategoria = categoria.NomeCategoria;
-                response.DataInsercao = categoria.DataInsercao;
-                response.DataAlteracao = categoria.DataAlteracao;
+                var response = new
+                {
+                    CategoriaId = categoria.CategoriaId,
+                    NomeCategoria = categoria.NomeCategoria,
+                    DataInsercao = categoria.DataInsercao,
+                    DataAlteracao = categoria.DataAlteracao
+                };
+
                 return Json(response, JsonRequestBehavior.AllowGet);
             }
         }
-
-        //
-        // POST: /Categoria/Delete/5
+               
+        /* GET: /Categoria/Delete/5
+         * Recebe id e executa o método responsável pela
+         * exclusão de elementos.
+         */
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -137,35 +137,15 @@ namespace TesteAdmissao.Controllers
                 var categoria = db.Categorias.Find(id);
                 db.Categorias.Remove(categoria);
                 db.SaveChanges();
-                _Mensagem("OK", " Categoria excluída com sucesso.");    
+                Helpers.HelpersGeral.MensagensDeStatus(this, "OK", " Categoria excluída com sucesso.");
                 return RedirectToAction("Index");
             }
             catch
             {
-                _Mensagem("FAILED", " Problema ao excluir."); 
+                Helpers.HelpersGeral.MensagensDeStatus(this, "FAILED", " Problema ao excluir.");
                 return View();
             }
         }
 
-        /*
-         * Método que retorna um TempData com mensagem, classe para exbição e ícone.
-         * Observação: criar um helper para que possa ser usado em outras Controllers.
-         */
-        public void _Mensagem(string status, string mensagem)
-        {
-            if (status == "OK")
-            {
-                TempData["mensagem"] = mensagem;
-                TempData["classe"] = "alert alert-success";
-                TempData["icone"] = "fa fa-check";
-            }
-            else
-            {
-                TempData["mensagem"] = mensagem;
-                TempData["classe"] = "alert alert-danger";
-                TempData["icone"] = "fa fa-ban";
-            }
-
-        }
     }
 }
